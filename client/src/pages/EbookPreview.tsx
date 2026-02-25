@@ -28,14 +28,12 @@ export default function EbookPreview() {
       {/* Navigation */}
       <nav className="border-b border-[oklch(0.18_0.03_250)] bg-[#0B1628]/90 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <Link href="/">
-            <a className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity">
               <ArrowLeft className="w-5 h-5" />
               <span className="font-semibold" style={{ fontFamily: "var(--font-heading)" }}>
                 Retour
               </span>
-            </a>
-          </Link>
+            </Link>
           <span
             className="font-bold text-lg tracking-widest"
             style={{ fontFamily: "var(--font-heading)" }}

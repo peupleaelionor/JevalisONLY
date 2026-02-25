@@ -122,7 +122,7 @@ export default function SimulationForm() {
     createSimulation.mutate({
       fullName: formData.fullName,
       email: formData.email,
-      country: formData.country as "france" | "suisse" | "belgique" | "luxembourg",
+      country: formData.country as "france" | "suisse" | "belgique" | "luxembourg" | "pays-bas" | "allemagne",
       canton: formData.country === "suisse" ? formData.canton : undefined,
       city: formData.city,
       operationType: formData.operationType as "achat" | "vente" | "achat_vente",

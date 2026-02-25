@@ -30,6 +30,7 @@
     "ADMIN_EMAIL": "@admin_email",
     "ADMIN_PASSWORD": "@admin_password",
     "APP_URL": "@app_url",
+    "EBOOK_PDF_URL": "@ebook_pdf_url",
     "RESEND_API_KEY": "@resend_api_key",
     "RESEND_FROM_EMAIL": "@resend_from_email",
     "RESEND_FROM_NAME": "@resend_from_name",
