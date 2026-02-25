@@ -1,14 +1,13 @@
-import "dotenv/config";
-import express from "express";
+/**
+ * Local development server entry point.
+ * Imports the shared Express app and adds Vite dev middleware + static serving.
+ * NOT used in production (Vercel uses api/index.ts instead).
+ */
 import { createServer } from "http";
 import net from "net";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../routers";
-import { createContext } from "./context";
-import { handleStripeWebhook } from "../stripe-webhook";
-import cookieParser from "cookie-parser";
+import app from "./app";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -30,28 +29,11 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
-  const app = express();
   const server = createServer(app);
-
-  // Stripe webhook needs raw body - must come BEFORE json/cookie parser
-  app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), handleStripeWebhook);
-
-  // Standard middleware
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  app.use(cookieParser());
-
-  // tRPC API
-  app.use(
-    "/api/trpc",
-    createExpressMiddleware({
-      router: appRouter,
-      createContext,
-    })
-  );
 
   // Serve client
   if (process.env.NODE_ENV === "production") {
+    const { default: express } = await import("express");
     const clientDist = path.resolve(__dirname, "../../dist/public");
     app.use(express.static(clientDist));
     app.get("*", (_req, res) => {
@@ -70,9 +52,8 @@ async function startServer() {
   const preferredPort = parseInt(process.env.PORT || "3000");
   const port = await findAvailablePort(preferredPort);
   server.listen(port, () => {
-    console.log(`[v0] Server running on http://localhost:${port}/`);
-    console.log(`[v0] NODE_ENV=${process.env.NODE_ENV}`);
-    console.log(`[v0] __dirname=${__dirname}`);
+    console.log(`[jevalis] Server running on http://localhost:${port}/`);
+    console.log(`[jevalis] NODE_ENV=${process.env.NODE_ENV}`);
   });
 }
 

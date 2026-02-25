@@ -130,3 +130,42 @@ export async function sendEbookEmail(params: SendEbookEmailParams): Promise<bool
     `,
   });
 }
+
+export interface SendPasswordResetEmailParams {
+  to: string;
+  name: string;
+  resetUrl: string;
+}
+
+export async function sendPasswordResetEmail(params: SendPasswordResetEmailParams): Promise<boolean> {
+  return sendEmail({
+    to: params.to,
+    subject: "Réinitialisation de votre mot de passe Jevalis",
+    html: `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Réinitialisation mot de passe</title></head>
+<body style="margin:0;padding:0;background-color:#0B1628;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <h1 style="font-size:24px;font-weight:900;letter-spacing:0.15em;color:#ffffff;margin:0;">JE<span style="color:#C9A84C">V</span>ALIS</h1>
+    </div>
+    <div style="background:#0F1E35;border:1px solid rgba(201,168,76,0.3);padding:40px;border-radius:4px;">
+      <h2 style="color:#ffffff;font-size:22px;font-weight:800;text-align:center;margin:0 0 12px;">Réinitialisation de votre mot de passe</h2>
+      <p style="color:#5A6E8A;text-align:center;font-size:15px;line-height:1.6;margin:0 0 32px;">Bonjour ${params.name.split(" ")[0]}, vous avez demandé à réinitialiser votre mot de passe. Ce lien est valable <strong style="color:#C9A84C">1 heure</strong>.</p>
+      <div style="text-align:center;margin-bottom:32px;">
+        <a href="${params.resetUrl}" style="display:inline-block;background:#C9A84C;color:#0B1628;font-weight:900;font-size:15px;text-decoration:none;padding:16px 40px;letter-spacing:0.05em;">
+          🔑 Réinitialiser mon mot de passe
+        </a>
+      </div>
+      <p style="color:#3A4E6A;font-size:12px;text-align:center;margin:0;">Si vous n'avez pas fait cette demande, ignorez cet email. Votre mot de passe restera inchangé.</p>
+    </div>
+    <div style="text-align:center;margin-top:32px;">
+      <p style="color:#2A3E5A;font-size:11px;">© 2026 Jevalis · <a href="https://jevalis.com/confidentialite" style="color:#3A4E6A;">Confidentialité</a></p>
+    </div>
+  </div>
+</body>
+</html>
+    `,
+  });
+}
