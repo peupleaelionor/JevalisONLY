@@ -7,7 +7,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "destination": "/api/index"
     },
     {
       "source": "/((?!api).*)",
@@ -15,8 +15,9 @@
     }
   ],
   "functions": {
-    "dist/index.js": {
-      "runtime": "nodejs20.x"
+    "api/index.ts": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 30
     }
   },
   "env": {
