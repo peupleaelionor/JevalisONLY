@@ -2,7 +2,7 @@
   "buildCommand": "pnpm run build",
   "devCommand": "pnpm run dev",
   "installCommand": "pnpm install --frozen-lockfile",
-  "framework": "vite",
+  "framework": null,
   "outputDirectory": "dist/public",
   "rewrites": [
     {
