@@ -4,12 +4,7 @@ import { createServer } from "http";
 import net from "net";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../routers";
-import { createContext } from "./context";
-import { handleStripeWebhook } from "../stripe-webhook";
-import cookieParser from "cookie-parser";
-import rateLimit from "express-rate-limit";
+import app from "./app";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,34 +26,9 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
-  const app = express();
   const server = createServer(app);
 
-  // Stripe webhook needs raw body - must come BEFORE json/cookie parser
-  app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), handleStripeWebhook);
-
-  // Standard middleware
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  app.use(cookieParser());
-
-  // tRPC API — rate limited (100 requests / 15 min per IP)
-  const trpcLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 100,
-    standardHeaders: "draft-7",
-    legacyHeaders: false,
-  });
-  app.use(
-    "/api/trpc",
-    trpcLimiter,
-    createExpressMiddleware({
-      router: appRouter,
-      createContext,
-    })
-  );
-
-  // Serve client
+  // Serve static frontend in production; use Vite dev server in dev
   if (process.env.NODE_ENV === "production") {
     const clientDist = path.resolve(__dirname, "../../dist/public");
     app.use(express.static(clientDist));
@@ -85,3 +55,4 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
+
