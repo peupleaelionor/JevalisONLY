@@ -29,8 +29,10 @@
     "VITE_STRIPE_PUBLISHABLE_KEY": "@vite_stripe_publishable_key",
     "ADMIN_EMAIL": "@admin_email",
     "ADMIN_PASSWORD": "@admin_password",
+    "APP_URL": "@app_url",
     "RESEND_API_KEY": "@resend_api_key",
     "RESEND_FROM_EMAIL": "@resend_from_email",
+    "RESEND_FROM_NAME": "@resend_from_name",
     "SUPABASE_URL": "@supabase_url",
     "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
     "SUPABASE_BUCKET": "@supabase_bucket"

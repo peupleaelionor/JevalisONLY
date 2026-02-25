@@ -13,9 +13,9 @@ import { eq } from "drizzle-orm";
 
 const SALT_ROUNDS = 10;
 
-// Admin credentials (à configurer dans les variables d'environnement)
+// Admin credentials from environment variables — no fallback password in production
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@jevalis.com";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123"; // À changer en production !
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 
 export const authRouter = router({
   /**
@@ -29,7 +29,7 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (input.email !== ADMIN_EMAIL || input.password !== ADMIN_PASSWORD) {
+      if (!ADMIN_PASSWORD || input.email !== ADMIN_EMAIL || input.password !== ADMIN_PASSWORD) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Email ou mot de passe incorrect",
