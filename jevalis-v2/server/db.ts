@@ -1,5 +1,6 @@
 import { eq, desc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import {
   simulations,
   payments,
@@ -14,9 +15,11 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL, {
+      const client = postgres(process.env.DATABASE_URL, {
+        prepare: false, // Required for Supabase transaction pooler (PgBouncer)
+      });
+      _db = drizzle(client, {
         schema: { simulations, payments, clientUsers },
-        mode: "default",
       });
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
