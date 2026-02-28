@@ -1,4 +1,11 @@
 node_modules/
+dist/
 .env
-*.zip
+.env.local
+.env.production
+*.log
+.DS_Store
+Thumbs.db
+pnpm-debug.log
 .vercel
+.netlify
