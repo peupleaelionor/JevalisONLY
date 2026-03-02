@@ -14,8 +14,6 @@ import Account from "./pages/Account";
 import AdminLogin from "./pages/AdminLogin";
 import EbookPreview from "./pages/EbookPreview";
 import LegalPage from "./pages/LegalPage";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
 
 function Router() {
   return (
@@ -29,8 +27,6 @@ function Router() {
       <Route path="/login" component={Login} />
       <Route path="/account" component={Account} />
       <Route path="/apercu-ebook" component={EbookPreview} />
-      <Route path="/forgot-password" component={ForgotPassword} />
-      <Route path="/reset-password" component={ResetPassword} />
       <Route path="/mentions-legales" component={() => <LegalPage page="mentions" />} />
       <Route path="/confidentialite" component={() => <LegalPage page="confidentialite" />} />
       <Route path="/cgv" component={() => <LegalPage page="cgv" />} />

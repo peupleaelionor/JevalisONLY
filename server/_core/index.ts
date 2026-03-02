@@ -4,7 +4,11 @@ import { createServer } from "http";
 import net from "net";
 import path from "path";
 import { fileURLToPath } from "url";
-import app from "./app";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { appRouter } from "../routers";
+import { createContext } from "./context";
+import { handleStripeWebhook } from "../stripe-webhook";
+import cookieParser from "cookie-parser";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -26,9 +30,27 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  const app = express();
   const server = createServer(app);
 
-  // Serve static frontend in production; use Vite dev server in dev
+  // Stripe webhook needs raw body - must come BEFORE json/cookie parser
+  app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), handleStripeWebhook);
+
+  // Standard middleware
+  app.use(express.json({ limit: "50mb" }));
+  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  app.use(cookieParser());
+
+  // tRPC API
+  app.use(
+    "/api/trpc",
+    createExpressMiddleware({
+      router: appRouter,
+      createContext,
+    })
+  );
+
+  // Serve client
   if (process.env.NODE_ENV === "production") {
     const clientDist = path.resolve(__dirname, "../../dist/public");
     app.use(express.static(clientDist));
@@ -55,4 +77,3 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
-
