@@ -1,12 +1,9 @@
 node_modules/
 dist/
 .env
-.env.local
-.env.production
-*.log
+.env.*
+*.zip
 .DS_Store
 Thumbs.db
-pnpm-debug.log
-.vercel
-.netlify
-package-lock.json
+dist/
+.vercel/
