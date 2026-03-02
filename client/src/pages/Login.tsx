@@ -107,7 +107,7 @@ export default function Login() {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <Label className="text-[oklch(0.65_0.02_250)] text-sm" style={{ fontFamily: "var(--font-caption)" }}>Mot de passe</Label>
-                {isLogin && <span className="text-xs text-[oklch(0.55_0.02_250)] hover:gold-text cursor-pointer transition-colors" style={{ fontFamily: "var(--font-caption)" }}>Mot de passe oublié ?</span>}
+                {isLogin && <Link href="/forgot-password"><span className="text-xs text-[oklch(0.55_0.02_250)] hover:gold-text cursor-pointer transition-colors" style={{ fontFamily: "var(--font-caption)" }}>Mot de passe oublié ?</span></Link>}
               </div>
               <Input type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="••••••••" required minLength={8}
                 className="bg-[oklch(0.13_0.025_250)] border-[oklch(0.22_0.03_250)] text-white h-12 focus:border-[oklch(0.65_0.12_85)] transition-colors"/>
