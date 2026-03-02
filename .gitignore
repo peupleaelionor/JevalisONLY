@@ -1,9 +1,4 @@
 node_modules/
 dist/
 .env
-.env.*
 *.zip
-.DS_Store
-Thumbs.db
-dist/
-.vercel/
