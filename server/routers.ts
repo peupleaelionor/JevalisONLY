@@ -211,6 +211,7 @@ export const appRouter = router({
       .input(z.object({ sessionId: z.string() }))
       .query(async () => {
         const ebookUrl = process.env.EBOOK_PDF_URL || `${process.env.APP_URL || ""}/ebook/guide-fiscal-europeen.pdf`;
+        const ebookUrl = process.env.EBOOK_PDF_URL || "";
         return { ebookUrl };
       }),
   }),

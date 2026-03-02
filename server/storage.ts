@@ -22,6 +22,7 @@ async function supabasePut(key: string, data: Buffer, contentType: string): Prom
         apikey: serviceKey,
       },
       body: new Uint8Array(data),
+      body: data,
     });
 
     if (!res.ok) {

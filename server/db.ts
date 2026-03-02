@@ -1,4 +1,5 @@
 import { eq, desc, count } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   simulations,
@@ -75,8 +76,8 @@ export async function listSimulations(
 export async function countSimulations() {
   const db = await getDb();
   if (!db) return 0;
-  const [row] = await db.select({ value: count() }).from(simulations);
-  return row?.value ?? 0;
+  const result = await db.select().from(simulations);
+  return result.length;
 }
 
 export async function getSimulationsByClientUserId(clientUserId: number) {
