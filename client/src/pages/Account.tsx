@@ -135,7 +135,6 @@ export default function Account() {
                           <div className="flex items-center gap-3 text-xs text-[oklch(0.50_0.02_250)]" style={{ fontFamily: "var(--font-caption)" }}>
                             <span className="flex items-center gap-1"><Calendar className="w-3 h-3"/> {new Date(sim.createdAt).toLocaleDateString("fr-FR")}</span>
                             {sim.operationType && <span>{OP_LABELS[sim.operationType] || sim.operationType}</span>}
-                            {sim.purchasePrice && <span>{Number(sim.purchasePrice).toLocaleString("fr-FR")} €</span>}
                           </div>
                         </div>
                         <span className={`px-3 py-1 text-xs font-bold ${sim.status === "completed" || sim.status === "paid" ? "bg-green-500/15 text-green-400 border border-green-500/20" : sim.status === "pending" ? "bg-yellow-500/15 text-yellow-400 border border-yellow-500/20" : "bg-red-500/15 text-red-400 border border-red-500/20"}`} style={{ fontFamily: "var(--font-caption)" }}>
