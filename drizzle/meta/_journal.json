@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1770442931790,
+      "tag": "0000_tiresome_sally_floyd",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1770443483715,
+      "tag": "0001_reflective_meltdown",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770496157386,
+      "tag": "0002_lovely_tenebrous",
+      "breakpoints": true
+    }
+  ]
+}
