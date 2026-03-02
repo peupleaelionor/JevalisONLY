@@ -21,7 +21,6 @@ async function supabasePut(key: string, data: Buffer, contentType: string): Prom
         Authorization: `Bearer ${serviceKey}`,
         apikey: serviceKey,
       },
-      body: new Uint8Array(data),
       body: data,
     });
 
