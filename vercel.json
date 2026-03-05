@@ -1,23 +1,17 @@
 {
   "buildCommand": "pnpm run build",
-  "devCommand": "pnpm run dev",
-  "installCommand": "pnpm install --frozen-lockfile",
+  "installCommand": "pnpm install --no-frozen-lockfile",
   "framework": null,
   "outputDirectory": "dist/public",
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index"
-    },
-    {
-      "source": "/((?!api|ebook).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/api/(.*)", "destination": "/api/index" },
+    { "source": "/((?!api|ebook).*)", "destination": "/index.html" }
   ],
   "functions": {
     "api/index.ts": {
       "runtime": "nodejs20.x",
-      "maxDuration": 30
+      "maxDuration": 30,
+      "memory": 1024
     }
   },
   "env": {
@@ -38,13 +32,5 @@
     "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
     "SUPABASE_BUCKET": "@supabase_bucket"
   },
-  "regions": [
-    "cdg1"
-  ]
-}
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "regions": ["cdg1"]
 }
