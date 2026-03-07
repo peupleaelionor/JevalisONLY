@@ -1,6 +1,5 @@
-import { eq, desc, count } from "drizzle-orm";
 import { eq, desc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from "drizzle-orm/postgres-js";
 import {
   simulations,
   payments,
@@ -18,6 +17,7 @@ export async function getDb() {
       _db = drizzle(process.env.DATABASE_URL, {
         schema: { simulations, payments, clientUsers },
         mode: "default",
+        prepare: false,
       });
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
