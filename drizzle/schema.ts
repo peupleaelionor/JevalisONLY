@@ -1,24 +1,24 @@
 import {
-  int,
-  mysqlEnum,
-  mysqlTable,
+  integer,
+  pgTable,
+  serial,
   text,
   timestamp,
   varchar,
   decimal,
   json,
-} from "drizzle-orm/mysql-core";
+} from "drizzle-orm/pg-core";
 
 /**
  * Client users table -- email/password authentication
  */
-export const clientUsers = mysqlTable("client_users", {
-  id: int("id").autoincrement().primaryKey(),
+export const clientUsers = pgTable("client_users", {
+  id: serial("id").primaryKey(),
   email: varchar("email", { length: 320 }).notNull().unique(),
   passwordHash: varchar("passwordHash", { length: 255 }).notNull(),
   fullName: varchar("fullName", { length: 255 }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
 });
 
@@ -28,10 +28,10 @@ export type InsertClientUser = typeof clientUsers.$inferInsert;
 /**
  * Simulations table -- stores all simulation requests and computed results.
  */
-export const simulations = mysqlTable("simulations", {
-  id: int("id").autoincrement().primaryKey(),
+export const simulations = pgTable("simulations", {
+  id: serial("id").primaryKey(),
   publicId: varchar("publicId", { length: 32 }).notNull().unique(),
-  clientUserId: int("clientUserId"),
+  clientUserId: integer("clientUserId"),
   fullName: varchar("fullName", { length: 255 }).notNull(),
   email: varchar("email", { length: 320 }).notNull(),
   country: varchar("country", { length: 32 }).notNull(),
@@ -44,14 +44,15 @@ export const simulations = mysqlTable("simulations", {
   renovationCost: decimal("renovationCost", { precision: 15, scale: 2 }),
   loanAmount: decimal("loanAmount", { precision: 15, scale: 2 }),
   loanRate: decimal("loanRate", { precision: 5, scale: 3 }),
-  loanDuration: int("loanDuration"),
+  loanDuration: integer("loanDuration"),
   results: json("results"),
   reportUrl: text("reportUrl"),
-  status: mysqlEnum("status", ["pending", "paid", "completed", "failed"])
+  status: varchar("status", { length: 20 })
     .default("pending")
-    .notNull(),
+    .notNull()
+    .$type<"pending" | "paid" | "completed" | "failed">(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
 
 export type Simulation = typeof simulations.$inferSelect;
@@ -60,18 +61,19 @@ export type InsertSimulation = typeof simulations.$inferInsert;
 /**
  * Payments table -- tracks Stripe payment intents linked to simulations.
  */
-export const payments = mysqlTable("payments", {
-  id: int("id").autoincrement().primaryKey(),
-  simulationId: int("simulationId").notNull(),
+export const payments = pgTable("payments", {
+  id: serial("id").primaryKey(),
+  simulationId: integer("simulationId").notNull(),
   stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
   stripeSessionId: varchar("stripeSessionId", { length: 255 }),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   currency: varchar("currency", { length: 3 }).default("EUR").notNull(),
-  status: mysqlEnum("status", ["pending", "succeeded", "failed", "refunded"])
+  status: varchar("status", { length: 20 })
     .default("pending")
-    .notNull(),
+    .notNull()
+    .$type<"pending" | "succeeded" | "failed" | "refunded">(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
 
 export type Payment = typeof payments.$inferSelect;
