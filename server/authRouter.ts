@@ -105,10 +105,11 @@ export const authRouter = router({
         email: input.email,
         passwordHash,
         fullName: input.fullName,
-      });
+      }).returning({ id: clientUsers.id });
+        
 
       // Créer une session client (cookie)
-      ctx.res.cookie("client_session", newUser.insertId.toString(), {
+      ctx.res.cookie("client_session", newUser.id.toString(), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
@@ -118,7 +119,7 @@ export const authRouter = router({
       return {
         success: true,
         user: {
-          id: newUser.insertId,
+          id: newUser.id,
           email: input.email,
           fullName: input.fullName,
         },

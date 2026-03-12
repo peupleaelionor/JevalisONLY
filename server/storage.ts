@@ -5,7 +5,7 @@ import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // ── Supabase Storage (preferred) ──────────────────────────────────────────
-async function supabasePut(key: string, data: Buffer, contentType: string): Promise<{ key: string; url: string } | null> {
+async function supabasePut(key: string, data: Uint8Array, contentType: string): Promise<{ key: string; url: string } | null> {
   const url = process.env.SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const bucket = process.env.SUPABASE_BUCKET || "jevalis-reports";
@@ -21,7 +21,6 @@ async function supabasePut(key: string, data: Buffer, contentType: string): Prom
         Authorization: `Bearer ${serviceKey}`,
         apikey: serviceKey,
       },
-      body: new Uint8Array(data),
       body: data,
     });
 
