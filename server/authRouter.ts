@@ -239,6 +239,7 @@ export const authRouter = router({
         country: sim.country,
         city: sim.city,
         operationType: sim.operationType,
+        purchasePrice: sim.purchasePrice,
         reportUrl: sim.reportUrl,
         status: sim.status,
         createdAt: sim.createdAt,
