@@ -6,7 +6,7 @@ const CONTENT: Record<string, { title: string; sections: { h: string; p: string 
     title: "Mentions légales",
     sections: [
       { h: "Éditeur du site", p: "Jevalis est un service édité par Jevalis SAS, société par actions simplifiée au capital de 1 000 €. Email : contact@jevalis.com" },
-      { h: "Hébergement", p: "Le site Jevalis est hébergé par Vercel Inc., 340 Pine Street Suite 701, San Francisco, California 94104, États-Unis." },
+      { h: "Hébergement", p: "Le site Jevalis est hébergé par Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, California 94107, États-Unis." },
       { h: "Directeur de la publication", p: "Le directeur de la publication est le représentant légal de Jevalis SAS." },
       { h: "Propriété intellectuelle", p: "L'ensemble des contenus présents sur le site Jevalis (textes, images, graphiques, logos) sont la propriété exclusive de Jevalis SAS et sont protégés par les lois françaises et internationales sur la propriété intellectuelle." },
       { h: "Responsabilité", p: "Les simulations fournies par Jevalis sont indicatives et ne constituent pas un conseil fiscal ou juridique. Jevalis décline toute responsabilité quant aux décisions prises sur la base des simulations." },
