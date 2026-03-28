@@ -13,40 +13,50 @@ Jevalis est un simulateur fiscal immobilier en ligne permettant d'évaluer l'imp
 
 ```
 /
-├── README.md
-├── index.html          # Page principale du simulateur
-├── .gitignore
-└── assets/
-    ├── css/            # Feuilles de style (futures)
-    ├── js/             # Scripts (futures)
-    └── images/         # Images et ressources visuelles
+├── client/             # Frontend React (Vite)
+├── server/             # Backend Express + tRPC
+├── shared/             # Types et constantes partagés
+├── drizzle/            # Schéma BDD et migrations (MySQL)
+├── netlify/functions/  # Netlify Function (point d'entrée API)
+├── netlify.toml        # Configuration Netlify
+├── package.json
+├── vite.config.ts
+└── tsconfig.json
 ```
 
 ## Lancer le projet
 
 ### En local
 
-Ouvrez simplement `index.html` dans votre navigateur :
-
 ```bash
-# Avec Python
-python3 -m http.server 8000
-
-# Ou avec Node.js (npx)
-npx serve .
+pnpm install
+pnpm run dev
 ```
 
-Puis accédez à [http://localhost:8000](http://localhost:8000).
+Puis accédez à [http://localhost:3000](http://localhost:3000).
 
-### Déploiement sur Vercel
+### Déploiement sur Netlify
 
-Le projet est prêt pour un déploiement statique sur [Vercel](https://vercel.com) :
+Le projet est configuré pour un déploiement automatique sur [Netlify](https://netlify.com) :
 
-1. Connectez votre repository GitHub à Vercel
-2. Vercel détecte automatiquement le projet comme un site statique
-3. Le fichier `index.html` à la racine est servi directement
+1. Connectez votre repository GitHub à Netlify
+2. La configuration `netlify.toml` gère tout automatiquement :
+   - Build : `pnpm run build`
+   - Publish : `dist/public`
+   - API : Netlify Functions (`/api/*` → `/.netlify/functions/api`)
+   - SPA : Redirections client-side
+3. Ajoutez vos variables d'environnement dans **Netlify → Site settings → Environment variables**
 
-Aucune configuration supplémentaire n'est nécessaire.
+## Variables d'environnement
+
+Voir `.env.example` pour la liste complète. Les principales :
+
+- `DATABASE_URL` — Connexion MySQL (Supabase)
+- `JWT_SECRET` — Secret pour les sessions
+- `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` — Stripe
+- `VITE_STRIPE_PUBLISHABLE_KEY` — Clé Stripe côté client
+- `RESEND_API_KEY` — Service d'envoi d'emails
+- `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` — Stockage PDF
 
 ## Licence
 

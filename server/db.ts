@@ -1,5 +1,4 @@
 import { eq, desc, count } from "drizzle-orm";
-import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   simulations,
